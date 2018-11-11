@@ -14,20 +14,19 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Kyle
  */
-public class Users 
+public class Teachers 
 {
+    private String name;
     private String username;
     private String password;
 
-    public Users() {
+    public Teachers() {
     }
 
-    public Users(Integer id, String username, String password, String fname, String lname) {
-        this.id = id;
+    public Teachers(String name, String username, String password) {
+        this.name = name;
         this.username = username;
         this.password = password;
-        this.fname = fname;
-        this.lname = lname;
     }
 
     public String getUsername() {
@@ -162,10 +161,10 @@ public class Users
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
+        if (!(object instanceof Teachers)) {
             return false;
         }
-        Users other = (Users) object;
+        Teachers other = (Teachers) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
