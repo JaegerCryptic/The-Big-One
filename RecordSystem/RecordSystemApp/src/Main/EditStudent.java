@@ -6,6 +6,7 @@
 package Main;
 
 import Main.Entities.Student;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,12 +27,16 @@ public class EditStudent extends javax.swing.JFrame {
      * Creates new form EditStudent
      */
     Student std = new Student();
+    DefaultTableModel model;
+            
     public EditStudent() {
         initComponents();
         std.FillStudents(jTable1, "");
         ButtonGroup bg = new ButtonGroup();
         bg.add(jRadioButtonMale);
         bg.add(jRadioButtonFemale);
+        model = (DefaultTableModel)jTable1.getModel();
+        jTable1.setRowHeight(40);
     }
 
     /**
@@ -205,6 +210,9 @@ public class EditStudent extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(51, 51, 51));
+        jTable1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -216,6 +224,11 @@ public class EditStudent extends javax.swing.JFrame {
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(jTable1);
@@ -267,12 +280,12 @@ public class EditStudent extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jButtonRemoveStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
+                        .addGap(38, 38, 38)
                         .addComponent(jButtonEditStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(33, 33, 33)
                         .addComponent(jButtonAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -321,13 +334,13 @@ public class EditStudent extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonRemoveStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonEditStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -390,9 +403,26 @@ public class EditStudent extends javax.swing.JFrame {
         if(jTextField_SID.getText().equals(""))
         {
             JOptionPane.showMessageDialog(null, "No Student Has Been Selected");
+        } else
+        {
+            int id = Integer.valueOf(jTextField_SID.getText());
+            std.StudentFunction('d', id, null, null, null, null, null, null);
+            std.FillStudents(jTable1, "");
+            jTable1.setModel(new DefaultTableModel(null, new Object[]{"ID", "First Name", "Last Name", 
+                    "Gender", "Birthdate", "Phone", "Address"}));
+            std.FillStudents(jTable1, "");
+            
+            jTextField_SID.setText("");
+            jTextAreaAddress.setText("");
+            jTextField_FName.setText("");             
+            jTextField_LName.setText("");
+            jTextField_Phone.setText("");
+            jTextField_FName.setText("");
+            jRadioButtonMale.setSelected(false);
+            jRadioButtonFemale.setSelected(false);
+            jDateChooserBirthdate.setDate(null);
         }
-        int id = Integer.valueOf(jTextField_SID.getText());
-        std.StudentFunction('d', id, null, null, null, null, null, null);
+       
     }//GEN-LAST:event_jButtonRemoveStudentActionPerformed
 
     private void jRadioButtonFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFemaleActionPerformed
@@ -417,10 +447,9 @@ public class EditStudent extends javax.swing.JFrame {
         as.setLocationRelativeTo(null);
         as.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButtonAddStudentActionPerformed
-
+    int rowIndex;
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int rowIndex = jTable1.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        rowIndex = jTable1.getSelectedRow();
         if(model.getValueAt(rowIndex, 3).toString().equals("M"))
         {
             jRadioButtonMale.setSelected(true);
@@ -444,6 +473,35 @@ public class EditStudent extends javax.swing.JFrame {
             Logger.getLogger(EditStudent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+   
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN)
+        {
+            rowIndex = jTable1.getSelectedRow();
+            jTextField_SID.setText(model.getValueAt(rowIndex, 0).toString());
+            jTextField_FName.setText(model.getValueAt(rowIndex, 1).toString());
+            jTextField_LName.setText(model.getValueAt(rowIndex, 2).toString());
+            jTextField_Phone.setText(model.getValueAt(rowIndex, 5).toString());
+            jTextAreaAddress.setText(model.getValueAt(rowIndex, 6).toString());
+            
+            if(model.getValueAt(rowIndex, 3).toString().equals("M"))
+            {
+                jRadioButtonMale.setSelected(true);
+                jRadioButtonFemale.setSelected(false);
+            }else
+            {
+                jRadioButtonMale.setSelected(false);
+                jRadioButtonFemale.setSelected(true);
+            }
+        }
+        Date bDate;
+        try {
+            bDate = new SimpleDateFormat("dd-MM-yyyy").parse(model.getValueAt(rowIndex, 4).toString());
+            jDateChooserBirthdate.setDate(bDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(EditStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable1KeyReleased
 
     /**
      * @param args the command line arguments
