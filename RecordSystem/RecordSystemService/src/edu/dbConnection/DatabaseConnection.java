@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class DatabaseConnection {
 

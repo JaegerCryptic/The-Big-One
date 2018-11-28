@@ -9,7 +9,7 @@ import edu.curd.operation.JDBCDataObject;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class StudentDTO implements JDBCDataObject {
 

@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class ClassAttendence extends javax.swing.JDialog {
 

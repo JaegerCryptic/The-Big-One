@@ -2,6 +2,29 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/student/ListStudentDetails.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/Main/Entities/Student.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/MainForm.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/WelcomeFrame.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/Main/Services/NewJFrame.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/teacher/TeacherDetails.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/ManageStudentService.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/impl/ManageTeacherServiceImpl.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/Main/Entities/Exercise.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/classes/ClassAttendence.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/classes/ClassManagment.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/student/StudentDetails.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/impl/ManageStudentServiceImpl.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/classes/ClassRegistration.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/excercises/ClassGrades.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/impl/ManageClassImpl.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/teacher/TeacheLogin.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/config/PropertyLoader.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/view/ui/excercises/ClassExcersises.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/ManageClassService.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/edu/data/service/ManageTeacherService.java</file>
+            <file>file:/C:/Users/Kyle/Documents/GitHub/The-Big-One/RecordSystem/RecordSystem/RecordSystemApp/src/Main/Services/RecordsConnection.java</file>
+        </group>
     </open-files>
 </project-private>

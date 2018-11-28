@@ -7,7 +7,7 @@ package edu.curd.operation;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public interface JDBCDataObject extends java.io.Serializable{
 

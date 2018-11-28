@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public interface ManageClassService {
     

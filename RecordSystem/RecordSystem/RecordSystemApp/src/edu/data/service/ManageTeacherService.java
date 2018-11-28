@@ -7,7 +7,7 @@ package edu.data.service;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public interface ManageTeacherService {
     

@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class ManageClass implements JDBCOperation {
 

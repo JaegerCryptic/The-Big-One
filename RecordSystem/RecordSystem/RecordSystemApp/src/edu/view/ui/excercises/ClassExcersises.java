@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class ClassExcersises extends javax.swing.JDialog {
 

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Aeron
+ * @author Kyle s
  */
 public class ManageTeacher implements JDBCOperation {
 

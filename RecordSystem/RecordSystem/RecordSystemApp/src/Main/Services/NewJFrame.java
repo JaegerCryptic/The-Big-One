@@ -7,7 +7,7 @@ package Main.Services;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class NewJFrame extends javax.swing.JFrame {
 

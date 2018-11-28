@@ -7,7 +7,7 @@ package edu.view.ui.student;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 import edu.curd.dto.StudentDTO;
 import edu.curd.operation.JDBCDataObject;

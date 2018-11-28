@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class TeacheLogin extends javax.swing.JDialog {
 

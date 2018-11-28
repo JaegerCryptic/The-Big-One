@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class ManageTeacherServiceImpl implements ManageTeacherService {
 

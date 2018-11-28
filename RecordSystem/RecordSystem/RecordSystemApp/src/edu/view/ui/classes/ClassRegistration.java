@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Aeron
+ * @author Kyle 
  */
 public class ClassRegistration extends javax.swing.JDialog {
 
