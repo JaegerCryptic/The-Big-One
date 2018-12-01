@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.view.ui.student;
 
-/**
- *
- * @author Kyle
- */
+
 import edu.curd.dto.StudentDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.data.service.ManageStudentService;
@@ -104,9 +97,9 @@ public class ListStudentDetails extends JDialog {
             }
         });
 
-      this.addComponentListener( new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent evt) {
-             loadTableData(manageStudentService.viewAllStudents());
+                loadTableData(manageStudentService.viewAllStudents());
             }
         });
 
@@ -151,7 +144,6 @@ public class ListStudentDetails extends JDialog {
 
                     int studentId = (Integer) table.getValueAt(table.getSelectedRow(), 0);
                     loadEditWindow(studentId);
-                    // JOptionPane.showMessageDialog(null, studentId);
                 }
             }
         });
@@ -175,17 +167,13 @@ public class ListStudentDetails extends JDialog {
         DefaultTableModel defaultTableModel = (DefaultTableModel) table.getModel();
 
         defaultTableModel.setRowCount(0);
-        
+
         studentList.forEach((jdbcStudent) -> {
 
             StudentDTO student = (StudentDTO) jdbcStudent;
             defaultTableModel.addRow(new Object[]{student.getStudentId(), student.getFirstName() + " " + student.getLastName(), student.getGender(),
                 student.getPhone(), student.getDob(), "Enrolled"});
         });
-//        for (int count = 1; count <= 30; count++) {
-////            defaultTableModel.addRow(new Object[]{"001", "First", "Female",
-////                "3453453535", "12-12-2000", "Enrolled"});
-//        }
     }
 
 }

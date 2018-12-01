@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.config;
 
-/**
- *
- * @author Kyle
- */
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +10,13 @@ public class PropertyLoader {
 
     private static PropertyLoader propertyLoaderInstance;
     private final Properties properties = new Properties();
-    
-    
+
     private PropertyLoader() {
-        loadProperties();
+        loadProperties(null);
+    }
+
+    private PropertyLoader(File configFile) {
+        loadProperties(configFile);
     }
 
     public static PropertyLoader getInstance() {
@@ -33,15 +28,29 @@ public class PropertyLoader {
         return propertyLoaderInstance;
     }
 
-    private void loadProperties() {
-        
+    public static Properties getProperties(){
+        return propertyLoaderInstance.properties; 
+    }
+    public static PropertyLoader getInstance(File configFile) {
+        synchronized (PropertyLoader.class) {
+            if (propertyLoaderInstance == null) {
+                propertyLoaderInstance = new PropertyLoader(configFile);
+            }
+        }
+        return propertyLoaderInstance;
+    }
+
+    private void loadProperties(File configFile) {
+
         InputStream input = null;
 
         try {
 
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream(configFile);
+
             properties.load(input);
 
+            System.out.println("Loading properties from : " + configFile.getAbsolutePath());
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -55,8 +64,7 @@ public class PropertyLoader {
         }
     }
 
-    
-    public String getProperty(String propertyName){
-        return this.properties.get(propertyName) !=null ? this.properties.get(propertyName).toString(): "";
+    public String getProperty(String propertyName) {
+        return this.properties.get(propertyName) != null ? this.properties.get(propertyName).toString() : "";
     }
 }

@@ -1,18 +1,12 @@
 package edu.curd.operation;
 
 import java.util.List;
+import java.util.Properties;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Kyle
- */
 public interface JDBCOperation {
 
+    void setContext(Properties properties);
+    
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects);
 
     public List<Integer> update(List<JDBCDataObject> jdbcDataObjects);

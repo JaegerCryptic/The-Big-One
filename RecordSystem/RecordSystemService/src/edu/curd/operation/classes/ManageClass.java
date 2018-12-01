@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.curd.operation.classes;
 
 import edu.curd.operation.student.*;
@@ -20,42 +15,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
 public class ManageClass implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageClass = new ManageClass();
-
-        List<JDBCDataObject> classList = new ArrayList<>();
-        classList.add(new ClassDTO(0, "Enterprise Systems", "Enterprise Subject", null));
-
-        /*
-        List<Integer> ids = manageClass.create(classList);
-         for (Integer intx : ids) {
-            System.out.println("X " + intx);
-         }
-         */
-        classList = new ArrayList<>();
-        classList.add(new ClassDTO(1, "Intro to Programming 1", "Intro to Programming Intro", null));
-
-        // List<Integer> ids = manageClass.update(classList);
-        //  for (Integer intx : ids) {
-        //      System.out.println("X " + intx);
-        //   }
-        classList = manageClass.read(new ClassDTO(1, null, null, null));
-        //studentList = manageStudent.read(new StudentDTO(0, "Firstx", null, null, null, null, null, null));
-        for (JDBCDataObject dto : classList) {
-            ClassDTO classDTO = (ClassDTO) dto;
-            System.out.println("X " + classDTO.getTopic());
-        }
-    }
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -66,7 +31,7 @@ public class ManageClass implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -130,7 +95,7 @@ public class ManageClass implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(this.contextProperties);
 
         PreparedStatement updateStatemtn = null;
 
@@ -198,7 +163,7 @@ public class ManageClass implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(this.contextProperties);
 
         PreparedStatement selectStatement = null;
 
@@ -251,4 +216,14 @@ public class ManageClass implements JDBCOperation {
 
     }
 
+    @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
+    }
+
+    private Properties contextProperties;
+
+    public ManageClass(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
 }

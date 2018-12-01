@@ -1,32 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.view.ui.excercises;
 
+import edu.curd.dto.ClassDTO;
+import edu.curd.operation.JDBCDataObject;
+import edu.curd.operation.excercises.ManageClassExercises;
+import edu.data.service.ManageClassService;
+import edu.data.service.ManageGradesService;
+import edu.data.service.impl.ManageClassImpl;
+import edu.data.service.impl.ManageGradesServiceImpl;
 import edu.view.ui.MainForm;
 import edu.view.ui.classes.*;
 import edu.view.ui.teacher.*;
+import edu.view.ui.util.GenericComboItem;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Kyle
- */
 public class ClassExcersises extends javax.swing.JDialog {
 
-    /**
-     * Creates new form TeacheLogin
-     */
+    ManageGradesService manageGradesService = new ManageGradesServiceImpl();
+        ManageClassService manageClassService = new ManageClassImpl();
+
+
     public ClassExcersises(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        initGui();
     }
 
     public ClassExcersises(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        initGui();
+    }
+
+    public ClassExcersises() {
+        super();
+        initComponents();
+        initGui();
     }
 
     /**
@@ -43,10 +54,10 @@ public class ClassExcersises extends javax.swing.JDialog {
         content = new javax.swing.JPanel();
         uName_label = new javax.swing.JLabel();
         uPass_label = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cmbExcersise = new javax.swing.JComboBox<>();
+        cmbClasses = new javax.swing.JComboBox<>();
+        save = new javax.swing.JButton();
+        cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -84,21 +95,19 @@ public class ClassExcersises extends javax.swing.JDialog {
         uPass_label.setForeground(new java.awt.Color(204, 204, 204));
         uPass_label.setText("Excercise Type");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbExcersise.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Assignment", "Tutorial", "In-class Activity", "Term End Exam", "Group Assignment" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Save");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancel.setText("Cancel");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelActionPerformed(evt);
             }
         });
 
@@ -113,14 +122,17 @@ public class ClassExcersises extends javax.swing.JDialog {
                     .addComponent(uName_label))
                 .addGap(64, 64, 64)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(contentLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1)
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton2))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbExcersise, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(save)
+                        .addGap(70, 70, 70))))
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,15 +140,15 @@ public class ClassExcersises extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uName_label)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbClasses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uPass_label)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbExcersise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(save)
+                    .addComponent(cancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -158,30 +170,73 @@ public class ClassExcersises extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (manageGradesService.saveExcersise(getSelectedClassId(), getSelectedExcercises())){
+            JOptionPane.showMessageDialog(this, "Excercise successfuly Saved!");
+        }else{
+            JOptionPane.showMessageDialog(this, "Error while saving the excercise");
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
+        private String getSelectedExcercises() {
+        try {
+            return (String) cmbExcersise.getSelectedItem();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No Excercises were selected!");
+        }
+        return null;
+    }
+    private int getSelectedClassId() {
+        try {
+            String selectedClass = (String) cmbClasses.getSelectedItem();
+            int selectedClassId = Integer.valueOf(selectedClass.split(" - ")[0]);
+            return selectedClassId;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No Classes were selected!");
+        }
+        return 0;
+    }
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-;
+
+        ClassExcersises clss = new ClassExcersises();
+        clss.setVisible(true);
+    }
+
+    private void loadClassDetails() {
+        List<JDBCDataObject> classObjLis = manageClassService.viewAllClasses();
+        if (classObjLis != null && !classObjLis.isEmpty()) {
+
+            classObjLis.forEach((classRow) -> {
+                ClassDTO classObject = (ClassDTO) classRow;
+                cmbClasses.addItem(new GenericComboItem(classObject.getClassId(), classObject.getTopic()).toString());
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "No Classes to display!");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancel;
+    private javax.swing.JComboBox<String> cmbClasses;
+    private javax.swing.JComboBox<String> cmbExcersise;
     private javax.swing.JPanel content;
     private javax.swing.JPanel header;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton save;
     private javax.swing.JLabel uName_label;
     private javax.swing.JLabel uPass_label;
     // End of variables declaration//GEN-END:variables
+
+    private void initGui() {
+        loadClassDetails();
+    }
 }

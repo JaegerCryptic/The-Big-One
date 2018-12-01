@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.curd.operation.excercises;
 
 import edu.curd.operation.*;
@@ -19,34 +14,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
 public class ManageClassExercises implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageClass = new ManageClassExercises();
-
-        List<JDBCDataObject> classList = new ArrayList<>();
-        classList.add(new ClassExercisesDTO(0, 1, "Assignent", null));
-
-        List<Integer> ids = manageClass.create(classList);
-        for (Integer intx : ids) {
-            System.out.println("X " + intx);
-        }
-
-        classList = manageClass.read(new ClassExercisesDTO(1, 0, null, null));
-        //studentList = manageStudent.read(new StudentDTO(0, "Firstx", null, null, null, null, null, null));
-        for (JDBCDataObject dto : classList) {
-            ClassExercisesDTO classDTO = (ClassExercisesDTO) dto;
-            System.out.println("X " + classDTO.getExcerciseId());
-        }
+    @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
     }
+
+    private Properties contextProperties;
+
+    public ManageClassExercises(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
+
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -57,7 +41,7 @@ public class ManageClassExercises implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -131,7 +115,7 @@ public class ManageClassExercises implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 

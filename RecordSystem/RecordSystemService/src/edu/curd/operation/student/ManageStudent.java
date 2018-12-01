@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.curd.operation.student;
 
 import edu.curd.operation.*;
@@ -17,38 +12,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
 public class ManageStudent implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageStudent = new ManageStudent();
-
-        List<JDBCDataObject> studentList = new ArrayList<>();
-        studentList.add(new StudentDTO(0, "First", "Last", "M", "12-2-2000", "1231234314", "5 54 TEst Road ViC ", null));
-        studentList.add(new StudentDTO(0, "Firstx", "Lastx", "F", "12-2-2001", "67867868", "7 54 TEst Road ViC ", null));
-
-        //List<Integer> ids = manageStudent.create(studentList);
-        // for (Integer intx : ids) {
-        //    System.out.println("X " + intx);
-        // }
-        studentList = new ArrayList<>();
-        studentList.add(new StudentDTO(4, "Mr First", "Mr Last", "T", "20-2-2000", "123123431477", "8 54 TEst Road ViC ", null));
-
-        //  List<Integer> ids = manageStudent.update(studentList);
-        //studentList = manageStudent.read(new StudentDTO(4, null, null, null, null, null, null, null));
-        studentList = manageStudent.read(new StudentDTO(0, "Firstx", null, null, null, null, null, null));
-        for (JDBCDataObject dto : studentList) {
-            StudentDTO tacher = (StudentDTO) dto;
-            System.out.println("X " + tacher.getFirstName());
-        }
+    @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
     }
+
+    private Properties contextProperties;
+
+    public ManageStudent(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
+
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -59,7 +39,7 @@ public class ManageStudent implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -127,7 +107,7 @@ public class ManageStudent implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement updateStatemtn = null;
 
@@ -198,7 +178,7 @@ public class ManageStudent implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 

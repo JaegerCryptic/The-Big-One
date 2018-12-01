@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.view.ui.teacher;
 
 import edu.config.PropertyLoader;
@@ -15,10 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Kyle
- */
+
 public class TeacheLogin extends javax.swing.JDialog {
 
     private static ManageTeacherService teacherService = new ManageTeacherServiceImpl();

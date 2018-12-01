@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.curd.operation.student;
 
 
@@ -18,36 +14,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
+
 public class ManageStudentAttendance implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageAttendance = new ManageStudentAttendance();
-
-        List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList.add(new AttendanceDTO(0, 1, 1, 2, null));
-        attendanceList.add(new AttendanceDTO(0, 3, 1, 1, null));
-
-        List<Integer> ids = manageAttendance.create(attendanceList);
-        for (Integer intx : ids) {
-            System.out.println("X " + intx);
-        }
-
-        //attendanceList = manageAttendance.read(new AttendanceDTO(4, null, null, null, null, null, null, null));
-        attendanceList = manageAttendance.read(new AttendanceDTO(1, 0, 0, 0, null));
-
-        for (JDBCDataObject dto : attendanceList) {
-            AttendanceDTO tacher = (AttendanceDTO) dto;
-            System.out.println("X " + tacher.getStudentId());
-        }
+                    @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
     }
+
+    private Properties contextProperties;
+
+    public ManageStudentAttendance(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
+
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -58,7 +42,7 @@ public class ManageStudentAttendance implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -133,7 +117,7 @@ public class ManageStudentAttendance implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 

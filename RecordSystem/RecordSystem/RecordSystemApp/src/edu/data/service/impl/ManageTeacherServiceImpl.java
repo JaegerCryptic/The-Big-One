@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.data.service.impl;
 
+import edu.config.PropertyLoader;
 import edu.curd.dto.TeacherDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.curd.operation.teacher.ManageTeacher;
@@ -14,16 +11,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
+
 public class ManageTeacherServiceImpl implements ManageTeacherService {
 
     private static ManageTeacher manageTeacher = null;
 
     static {
-        manageTeacher = new ManageTeacher();
+        manageTeacher = new ManageTeacher(PropertyLoader.getInstance().getProperties());
     }
 
     @Override

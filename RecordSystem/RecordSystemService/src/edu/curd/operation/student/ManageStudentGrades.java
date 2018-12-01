@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.curd.operation.student;
 
 import edu.curd.operation.*;
@@ -17,36 +12,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
 public class ManageStudentGrades implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageAttendance = new ManageStudentGrades();
-
-        List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList.add(new GadesDTO(0, 1, 1, "Pass", "50", null));
-        attendanceList.add(new GadesDTO(0, 1, 2, "Fail", "20", null));
-
-        List<Integer> ids = manageAttendance.create(attendanceList);
-        for (Integer intx : ids) {
-            System.out.println("X " + intx);
-        }
-
-//        attendanceList = manageAttendance.read(new GadesDTO(1, 0, 0, null,null, null));
-        attendanceList = manageAttendance.read(new GadesDTO(0, 0, 0, "Pass",null, null));
-
-        for (JDBCDataObject dto : attendanceList) {
-            GadesDTO tacher = (GadesDTO) dto;
-            System.out.println("X " + tacher.getGrade());
-        }
+    @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
     }
+
+    private Properties contextProperties;
+
+    public ManageStudentGrades(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
+
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -57,7 +39,7 @@ public class ManageStudentGrades implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -133,7 +115,7 @@ public class ManageStudentGrades implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 

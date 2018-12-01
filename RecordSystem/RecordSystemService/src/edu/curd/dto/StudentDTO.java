@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.curd.dto;
 
 import edu.curd.operation.JDBCDataObject;
 
-/**
- *
- * @author Kyle
- */
+
 public class StudentDTO implements JDBCDataObject {
+
+
 
     public int getStudentId() {
         return studentId;
@@ -29,13 +24,30 @@ public class StudentDTO implements JDBCDataObject {
     private String phone;
     private String address;
     private String timeStamp;
+    private int enrollmentId;
 
+    public int getEnrollmentId() {
+        return enrollmentId;
+    }
+    
     public StudentDTO() {
 
     }
 
     public StudentDTO(int studentId, String firstName, String lastName, String gender, String dob, String phone, String address, String timeStamp) {
         this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dob = dob;
+        this.phone = phone;
+        this.address = address;
+        this.timeStamp = timeStamp;
+    }
+    
+        public StudentDTO(int studentId,int enrollmentId, String firstName, String lastName, String gender, String dob, String phone, String address, String timeStamp) {
+        this.studentId = studentId;
+        this.enrollmentId= enrollmentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

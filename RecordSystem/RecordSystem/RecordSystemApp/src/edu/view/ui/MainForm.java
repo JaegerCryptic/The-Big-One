@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.view.ui;
 
+import edu.config.PropertyLoader;
 import edu.curd.dto.StudentDTO;
 import edu.view.ui.classes.ClassAttendence;
 import edu.view.ui.classes.ClassManagment;
@@ -12,6 +9,7 @@ import edu.view.ui.classes.ClassRegistration;
 import edu.view.ui.excercises.ClassExcersises;
 import edu.view.ui.excercises.ClassGrades;
 import edu.view.ui.student.ListStudentDetails;
+import edu.view.ui.student.ManageStudentAttendance;
 import edu.view.ui.student.StudentDetails;
 import edu.view.ui.teacher.TeacherDetails;
 import java.awt.Dimension;
@@ -19,10 +17,6 @@ import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Kyle
- */
 public class MainForm extends javax.swing.JFrame {
 
     Dimension desktopSize;
@@ -31,13 +25,14 @@ public class MainForm extends javax.swing.JFrame {
     JDialog ListStudentDetailsForm = new ListStudentDetails(this);
     JDialog changeTeacherDetailsForm = new TeacherDetails(this);
     StudentDetails studentDetailsForm = new StudentDetails(this);
-    JDialog classAttendenceForm = new ClassAttendence(this);
+    JDialog classAttendenceForm = new ManageStudentAttendance(this);
     JDialog classExcersisesForm = new ClassExcersises(this);
     JDialog classGradesForm = new ClassGrades(this);
 
     public static String USER_ID="";
     public MainForm() {
         initComponents();
+        this.setTitle(PropertyLoader.getInstance().getProperty("APP_NAME"));
     }
 
     /**

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.curd.operation.classes;
 
 import edu.curd.operation.*;
@@ -18,40 +14,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle
- */
 public class ManageClassEnrollment implements JDBCOperation {
 
-    public static void main(String... arg) {
-
-        JDBCOperation manageClass = new ManageClassEnrollment();
-
-        List<JDBCDataObject> classList = new ArrayList<>();
-        classList.add(new EnrollmentDTO(0, 5, 1, null));
-
-        List<Integer> ids = manageClass.create(classList);
-        for (Integer intx : ids) {
-            System.out.println("X " + intx);
-        }
-        /*   */
-  
-
-        // List<Integer> ids = manageClass.update(classList);
-        //  for (Integer intx : ids) {
-        //      System.out.println("X " + intx);
-        //   }
-        classList = manageClass.read(new EnrollmentDTO(1, 0, 0, null));
-        //studentList = manageStudent.read(new StudentDTO(0, "Firstx", null, null, null, null, null, null));
-        for (JDBCDataObject dto : classList) {
-            EnrollmentDTO classDTO = (EnrollmentDTO) dto;
-            System.out.println("X " + classDTO.getStudentId());
-        }
-    }
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -62,7 +30,7 @@ public class ManageClassEnrollment implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -136,7 +104,7 @@ public class ManageClassEnrollment implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 
@@ -169,6 +137,48 @@ public class ManageClassEnrollment implements JDBCOperation {
         return returnObjects;
     }
 
+    public List<StudentDTO> readEnrolledStudents(int classId) {
+
+        List<StudentDTO> returnObjects = new ArrayList<>();
+
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
+
+        PreparedStatement selectStatement = null;
+
+        String selectSQL = " SELECT distinct st.student_id,enrollment_id, first_name, last_name FROM `classroom_records`.`student` st join `classroom_records`.`enrollment` enr on st.student_id = enr.student_id WHERE 1=1  AND class_id=?";
+
+            try {
+                selectStatement = connection.prepareStatement(selectSQL);
+                selectStatement.setInt(1, classId);
+                
+                ResultSet results = selectStatement.executeQuery();
+                while (results.next()) {
+                    returnObjects.add(new StudentDTO(results.getInt(1),results.getInt(2), results.getString(3), results.getString(4), null, null,null,null,null));
+                }
+            } catch (SQLException e) {
+                System.err.print("Erro while listing data.");
+            } finally {
+
+                if (selectStatement != null) {
+                    try {
+                        selectStatement.close();
+                    } catch (SQLException ex) {
+                    }
+                }
+                if (connection != null) {
+                    try {
+                        connection.setAutoCommit(true);
+                        connection.close();
+                    } catch (SQLException ex) {
+                    }
+                }
+            }
+            return returnObjects;
+        }
+
+
+    
+
     private StringBuilder generateSelectStatment(JDBCDataObject jdbcDataObjects) {
 
         StringBuilder selectSQL = new StringBuilder("SELECT * FROM `classroom_records`.`enrollment` WHERE 1=1 ");
@@ -187,6 +197,18 @@ public class ManageClassEnrollment implements JDBCOperation {
         }
         return selectSQL;
 
+    }
+    
+    
+        @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
+    }
+
+    private Properties contextProperties;
+
+    public ManageClassEnrollment(Properties contextProperties) {
+        this.setContext(contextProperties);
     }
 
 }

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Kyle
+ * @author Aeron
  */
 public class StudentDetails extends javax.swing.JDialog {
 

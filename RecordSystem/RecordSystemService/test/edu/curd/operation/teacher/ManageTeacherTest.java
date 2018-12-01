@@ -5,9 +5,12 @@
  */
 package edu.curd.operation.teacher;
 
+import edu.curd.dto.TeacherDTO;
 import edu.curd.operation.*;
+import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Properties;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,36 +23,20 @@ import static org.junit.Assert.*;
  * @author Aeron
  */
 public class ManageTeacherTest {
-    
+
     public ManageTeacherTest() {
     }
-    
+
+    static JDBCOperation manageTeacher;
+    static Properties prop = null;
+
     @BeforeClass
     public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of main method, of class ManageTeacher.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] arg = null;
-        ManageTeacher.main(arg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        prop = new Properties();
+        prop.put("DB_URL", "jdbc:mysql://localhost:3306/classroom_records");
+        prop.put("DB_USER", "root");
+        prop.put("DB_PASSWORD", "root123");
+        manageTeacher = new ManageTeacher(prop);
     }
 
     /**
@@ -57,14 +44,13 @@ public class ManageTeacherTest {
      */
     @Test
     public void testCreate() {
-        System.out.println("create");
-        List<JDBCDataObject> jdbcDataObjects = null;
-        ManageTeacher instance = new ManageTeacher();
-        List<Integer> expResult = null;
-        List<Integer> result = instance.create(jdbcDataObjects);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        List<JDBCDataObject> teacherList = new ArrayList<>();
+        teacherList.add(new TeacherDTO(0, "test1", "test123", null));
+        teacherList.add(new TeacherDTO(0, "test2", "test123", null));
+        List<Integer> ids = manageTeacher.create(teacherList);
+
+        assertTrue(ids.size() == 2);
     }
 
     /**
@@ -72,44 +58,26 @@ public class ManageTeacherTest {
      */
     @Test
     public void testUpdate() {
-        System.out.println("update");
-        List<JDBCDataObject> jdbcDataObjects = null;
-        ManageTeacher instance = new ManageTeacher();
-        List<Integer> expResult = null;
-        List<Integer> result = instance.update(jdbcDataObjects);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        List<JDBCDataObject> teacherList = new ArrayList<>();
+        teacherList.add(new TeacherDTO(1, null, "123432", null));
+        List<Integer> ids = manageTeacher.update(teacherList);
+
+        assertTrue(ids.size() == 1);
     }
 
     /**
      * Test of delete method, of class ManageTeacher.
      */
-    @Test
-    public void testDelete() {
-        System.out.println("delete");
-        List<JDBCDataObject> jdbcDataObjects = null;
-        ManageTeacher instance = new ManageTeacher();
-        List<Integer> expResult = null;
-        List<Integer> result = instance.delete(jdbcDataObjects);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of read method, of class ManageTeacher.
      */
     @Test
     public void testRead() {
-        System.out.println("read");
-        JDBCDataObject jdbcDataObjects = null;
-        ManageTeacher instance = new ManageTeacher();
-        List<JDBCDataObject> expResult = null;
-        List<JDBCDataObject> result = instance.read(jdbcDataObjects);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<JDBCDataObject> teacherList = new ArrayList<>();
+        teacherList = manageTeacher.read(new TeacherDTO(1, null, "123432", null));
+
+        assertTrue(teacherList.get(0) != null);
     }
-    
+
 }

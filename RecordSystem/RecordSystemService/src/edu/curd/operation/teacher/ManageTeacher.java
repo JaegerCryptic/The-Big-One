@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.curd.operation.teacher;
 
 import edu.curd.operation.*;
@@ -17,34 +13,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Kyle s
- */
 public class ManageTeacher implements JDBCOperation {
 
+                            @Override
+    public void setContext(Properties properties) {
+        this.contextProperties = properties;
+    }
+
+    private Properties contextProperties;
+
+    public ManageTeacher(Properties contextProperties) {
+        this.setContext(contextProperties);
+    }
     public static void main(String... arg) {
 
-        JDBCOperation manageTeacher = new ManageTeacher();
-
-        List<JDBCDataObject> teacherList = new ArrayList<>();
-        // teacherList.add(new TeacherDTO(0, "testuserx", "test123", null));
-        //  teacherList.add(new TeacherDTO(4, null, "123432", null));
-
-        //List<Integer> ids = manageTeacher.update(teacherList);
-        //for (Integer intx : ids) {
-        //     System.out.println("X " + intx);
-        // }
-        // teacherList = manageTeacher.read(new TeacherDTO(1, null, "123432", null));
-        teacherList = manageTeacher.read(new TeacherDTO(0, "testuserx", "test123", null));
-
-        for (JDBCDataObject dto : teacherList) {
-            TeacherDTO tacher = (TeacherDTO) dto;
-            System.out.println("X " + tacher.getTeacherId());
-        }
     }
 
     @Override
@@ -56,7 +42,7 @@ public class ManageTeacher implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement insertStatemtn = null;
 
@@ -119,7 +105,7 @@ public class ManageTeacher implements JDBCOperation {
 
         List<Integer> returnKeys = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement updateStatemtn = null;
 
@@ -184,7 +170,7 @@ public class ManageTeacher implements JDBCOperation {
 
         List<JDBCDataObject> returnObjects = new ArrayList<>();
 
-        Connection connection = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
 
         PreparedStatement selectStatement = null;
 

@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.view.ui.classes;
 
+import edu.view.ui.util.ListTransferHandler;
 import edu.curd.dto.ClassDTO;
+import edu.curd.dto.EnrollmentDTO;
 import edu.curd.dto.StudentDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.data.service.ManageClassService;
@@ -14,20 +12,22 @@ import edu.data.service.impl.ManageClassImpl;
 import edu.data.service.impl.ManageStudentServiceImpl;
 import edu.view.ui.MainForm;
 import edu.view.ui.teacher.*;
+import edu.view.ui.util.GenericComboItem;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Kyle 
- */
 public class ClassRegistration extends javax.swing.JDialog {
 
     /**
@@ -48,6 +48,12 @@ public class ClassRegistration extends javax.swing.JDialog {
         initDataSettings();
     }
 
+    public ClassRegistration() {
+
+        initComponents();
+        initDataSettings();
+    }
+
     private void initDataSettings() {
         this.addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent evt) {
@@ -56,6 +62,10 @@ public class ClassRegistration extends javax.swing.JDialog {
             }
 
         });
+
+        studnetList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        studnetList.setDragEnabled(true);
+        studnetList.setTransferHandler(new ListTransferHandler(this));
 
     }
 
@@ -81,13 +91,13 @@ public class ClassRegistration extends javax.swing.JDialog {
             return;
         }
 
-        Vector <String> finalList= new Vector <>();
+        Vector<String> finalList = new Vector<>();
         studentList.forEach((jdbcStudent) -> {
 
             StudentDTO student = (StudentDTO) jdbcStudent;
-            finalList.add(student.getStudentId() +" - "+ student.getFirstName() + " "+ student.getLastName());
+            finalList.add(student.getStudentId() + " - " + student.getFirstName() + " " + student.getLastName());
         });
-        
+
         studnetList.setListData(finalList);
     }
 
@@ -108,7 +118,7 @@ public class ClassRegistration extends javax.swing.JDialog {
         save = new javax.swing.JButton();
         cancle = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        studentIds = new javax.swing.JTextArea();
+        studentIdTxt = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         studnetList = new javax.swing.JList<>();
         cmbClasses = new javax.swing.JComboBox<>();
@@ -120,7 +130,7 @@ public class ClassRegistration extends javax.swing.JDialog {
 
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
-        jLabel1.setText("Class Registration");
+        jLabel1.setText("Class Enrollment");
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -163,11 +173,17 @@ public class ClassRegistration extends javax.swing.JDialog {
             }
         });
 
-        studentIds.setColumns(20);
-        studentIds.setRows(5);
-        jScrollPane1.setViewportView(studentIds);
+        studentIdTxt.setColumns(20);
+        studentIdTxt.setRows(5);
+        jScrollPane1.setViewportView(studentIdTxt);
 
         jScrollPane2.setViewportView(studnetList);
+
+        cmbClasses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbClassesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
         content.setLayout(contentLayout);
@@ -241,18 +257,61 @@ public class ClassRegistration extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // TODO add your handling code here:
+
+        if (studentIdTxt.getText().replaceAll(";", "").trim().length() > 0) {
+
+            boolean enrrolmentStatus = manageClassService.saveEnrollment( getSelectedClassId(), getStudentIdList());
+
+            if (enrrolmentStatus) {
+                JOptionPane.showMessageDialog(this, "Student Enrollment was saved!");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No Students were selected!");
+
+        }
+
     }//GEN-LAST:event_saveActionPerformed
 
+    private int getSelectedClassId() {
+        try {
+            String selectedClass = (String) cmbClasses.getSelectedItem();
+            int selectedClassId = Integer.valueOf(selectedClass.split(" - ")[0]);
+            return selectedClassId;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No Classes were selected!");
+        }
+        return 0;
+    }
     private void cancleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancleActionPerformed
+
+    private void cmbClassesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClassesActionPerformed
+
+            List<EnrollmentDTO> enrollments = manageClassService.viewEnrolledStuentIDs(getSelectedClassId());
+            
+            if(enrollments==null || enrollments.isEmpty())
+                studentIdTxt.setText("");
+            
+            StringBuffer studentIdText= new StringBuffer();
+            
+            for(EnrollmentDTO student : enrollments)
+                studentIdText.append(student.getStudentId()).append(" ; ");
+            
+            studentIdTxt.setText(studentIdText.toString());
+    }//GEN-LAST:event_cmbClassesActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        ;
+        ClassRegistration newClassRegistration = new ClassRegistration();
+        newClassRegistration.setVisible(true);
+    }
+
+    public Set<String> getStudentIdList() {
+        return new HashSet<String>(Arrays.asList(studentIdTxt.getText().split(" ; ")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -264,33 +323,9 @@ public class ClassRegistration extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton save;
-    private javax.swing.JTextArea studentIds;
+    private javax.swing.JTextArea studentIdTxt;
     private javax.swing.JList<String> studnetList;
     private javax.swing.JLabel uName_label;
     private javax.swing.JLabel uPass_label;
     // End of variables declaration//GEN-END:variables
-}
-
-class GenericComboItem {
-
-    private int key;
-    private String value;
-
-    public GenericComboItem(int key, String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(key) + " - " + this.value;
-    }
-
-    public String getKey() {
-        return String.valueOf(key);
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

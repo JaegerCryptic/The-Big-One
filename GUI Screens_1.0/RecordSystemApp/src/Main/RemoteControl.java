@@ -10,7 +10,7 @@ package Main;
  * @author Aeron
  */
 
-import edu.command.*;
+//import edu.command.*;
 
 public class RemoteControl{
   private Command command;
