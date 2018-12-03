@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  *
- * @author Kyle
+ * @author aeronx
  */
 public interface ManageAttendenceService {
     

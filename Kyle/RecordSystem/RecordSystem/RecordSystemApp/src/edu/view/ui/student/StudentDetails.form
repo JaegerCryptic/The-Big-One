@@ -132,6 +132,23 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="uName_label" min="-2" max="-2" attributes="0"/>
+                              <Component id="uName_label3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="uName_label8" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane1" alignment="0" min="-2" pref="373" max="-2" attributes="0"/>
+                              <Component id="txtstudentPhoe" alignment="0" min="-2" pref="303" max="-2" attributes="0"/>
+                              <Component id="txtstudentDOB" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
+                              <Component id="txtstudentLName" alignment="0" min="-2" pref="363" max="-2" attributes="0"/>
+                              <Component id="txtstudentFName" alignment="0" min="-2" pref="363" max="-2" attributes="0"/>
+                              <Component id="txtstudentId" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <EmptySpace min="158" pref="158" max="-2" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -145,34 +162,11 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
-                          <Component id="uName_label1" min="-2" max="-2" attributes="0"/>
+                          <Component id="uName_label4" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="uName_label" min="-2" max="-2" attributes="0"/>
-                                      <Component id="uName_label3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="uName_label8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
-                                  <Component id="uName_label4" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" alignment="0" min="-2" pref="373" max="-2" attributes="0"/>
-                              <Component id="txtstudentLName" alignment="0" min="-2" pref="363" max="-2" attributes="0"/>
-                              <Component id="txtstudentFName" alignment="0" min="-2" pref="363" max="-2" attributes="0"/>
-                              <Component id="txtstudentId" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtStudentDOB" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtstudentPhoe" alignment="0" pref="303" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+                          <Component id="uName_label1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -211,7 +205,7 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="uName_label4" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtStudentDOB" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtstudentDOB" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -357,6 +351,19 @@
             <Property name="text" type="java.lang.String" value="DOB"/>
           </Properties>
         </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="txtstudentDOB">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="11" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JLabel" name="uName_label5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -483,8 +490,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtstudentFNameActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtstudentFNameKeyPressed"/>
           </Events>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="txtStudentDOB">
         </Component>
       </SubComponents>
     </Container>
