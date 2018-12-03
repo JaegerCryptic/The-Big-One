@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +32,6 @@ public class ManageClassExercises implements JDBCOperation {
     public ManageClassExercises(Properties contextProperties) {
         this.setContext(contextProperties);
     }
-
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -106,6 +107,48 @@ public class ManageClassExercises implements JDBCOperation {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Map<Integer,String> getTopicList(int excerciseId) {
+
+        if (excerciseId <= 0) {
+            return new HashMap<>();
+        }
+
+       Map<Integer,String> returnObjects = new HashMap<>();
+
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
+
+        PreparedStatement selectStatement = null;
+
+        String selectSQL = "SELECT topic_id, topic FROM classroom_records.excercise_topic where exercises_id=?";
+
+        try {
+            selectStatement = connection.prepareStatement(selectSQL);
+            selectStatement.setInt(1, excerciseId);
+            ResultSet results = selectStatement.executeQuery();
+            while (results.next()) {
+                returnObjects.put(results.getInt(1), results.getString(2));
+            }
+        } catch (SQLException e) {
+            System.err.print("Erro while listing data.");
+        } finally {
+
+            if (selectStatement != null) {
+                try {
+                    selectStatement.close();
+                } catch (SQLException ex) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return returnObjects;
+    }
+
     @Override
     public List<JDBCDataObject> read(JDBCDataObject jdbcDataObjects) {
 
@@ -166,6 +209,61 @@ public class ManageClassExercises implements JDBCOperation {
         }
         return selectSQL;
 
+    }
+
+    public boolean createTopic(int calssId, int excerciseId, String topic) {
+
+        List<Integer> returnKeys = new ArrayList<>();
+
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
+
+        PreparedStatement insertStatemtn = null;
+
+        String insertSQL = "INSERT INTO `classroom_records`.`excercise_topic` (`exercises_id`,`topic`)VALUES (?,?);";
+
+        try {
+            connection.setAutoCommit(false);
+            insertStatemtn = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+
+            insertStatemtn.setInt(1, excerciseId);
+            insertStatemtn.setString(2, topic);
+
+            insertStatemtn.executeUpdate();
+
+            ResultSet rs = insertStatemtn.getGeneratedKeys();
+
+            if (rs.next()) {
+                returnKeys.add(rs.getInt(1));
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch (SQLException sqlError) {
+                    Logger.getLogger(ManageClassExercises.class.getName()).log(Level.SEVERE, "Error while performing the operation.", sqlError);
+                }
+            }
+        } finally {
+
+            if (insertStatemtn != null) {
+                try {
+                    insertStatemtn.close();
+                } catch (SQLException ex) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return !returnKeys.isEmpty();
     }
 
 }

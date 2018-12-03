@@ -1,6 +1,4 @@
-
 package edu.curd.operation.student;
-
 
 import edu.curd.operation.*;
 
@@ -18,10 +16,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ManageStudentAttendance implements JDBCOperation {
 
-                    @Override
+    @Override
     public void setContext(Properties properties) {
         this.contextProperties = properties;
     }
@@ -31,7 +28,6 @@ public class ManageStudentAttendance implements JDBCOperation {
     public ManageStudentAttendance(Properties contextProperties) {
         this.setContext(contextProperties);
     }
-
 
     @Override
     public List<Integer> create(List<JDBCDataObject> jdbcDataObjects) {
@@ -127,7 +123,7 @@ public class ManageStudentAttendance implements JDBCOperation {
             selectStatement = connection.prepareStatement(selectSQL.toString());
             ResultSet results = selectStatement.executeQuery();
             while (results.next()) {
-                returnObjects.add(new AttendanceDTO(results.getInt(1), results.getInt(2), results.getInt(3), results.getInt(4), results.getString(5)));
+                returnObjects.add(new AttendanceDTO(results.getInt(1), null, results.getInt(2), results.getInt(3), results.getInt(4), results.getString(5)));
             }
         } catch (SQLException e) {
             System.err.print("Erro while listing data.");
@@ -168,9 +164,52 @@ public class ManageStudentAttendance implements JDBCOperation {
             if (attendance.getClassId() > 0) {
                 selectSQL.append(" AND ").append("class_id=").append(attendance.getClassId());
             }
+            if (attendance.getTimeStamp()!=null) {
+                selectSQL.append(" AND ").append("created_ts like '").append(attendance.getTimeStamp()).append(" %'");
+            }
         }
         return selectSQL;
 
     }
 
+    
+     public List<JDBCDataObject> read(int classId, String date) {
+
+
+        List<JDBCDataObject> returnObjects = new ArrayList<>();
+
+        Connection connection = DatabaseConnection.getConnection(contextProperties);
+
+        PreparedStatement selectStatement = null;
+
+        String selectSQL = "SELECT distinct enr.student_id, concat(st.first_name,' ' , st.last_name), att.attendance_id FROM classroom_records.enrollment enr JOIN classroom_records.student st  on st.student_id=enr.student_id  LEFT OUTER JOIN classroom_records.attendance att on att.student_id=enr.student_id AND att.created_ts like ? WHERE 1=1  AND enr.class_id=? ";
+
+        try {
+            selectStatement = connection.prepareStatement(selectSQL);
+            selectStatement.setString(1, date + "%");
+             selectStatement.setInt(2, classId);
+            ResultSet results = selectStatement.executeQuery();
+            while (results.next()) {
+                returnObjects.add(new AttendanceDTO(results.getInt(3),results.getString(2), 0, results.getInt(1),classId, null));
+            }
+        } catch (SQLException e) {
+            System.err.print("Erro while listing data.");
+        } finally {
+
+            if (selectStatement != null) {
+                try {
+                    selectStatement.close();
+                } catch (SQLException ex) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return returnObjects;
+    }
 }

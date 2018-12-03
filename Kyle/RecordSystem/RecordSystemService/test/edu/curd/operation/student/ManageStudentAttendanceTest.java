@@ -44,8 +44,8 @@ public class ManageStudentAttendanceTest {
 
        
         List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList.add(new AttendanceDTO(0, 1, 1, 2, null));
-        attendanceList.add(new AttendanceDTO(0, 3, 1, 1, null));
+        attendanceList.add(new AttendanceDTO(0,null, 1, 1, 2, null));
+        attendanceList.add(new AttendanceDTO(0,null, 3, 1, 1, null));
 
         List<Integer> ids = manageAttendance.create(attendanceList);
        assertEquals(2, ids.size());
@@ -61,7 +61,7 @@ public class ManageStudentAttendanceTest {
     public void testRead() {
        
         List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList = manageAttendance.read(new AttendanceDTO(1, 0, 0, 0, null));
+        attendanceList = manageAttendance.read(new AttendanceDTO(1,null, 0, 0, 0, null));
 
          assertNotNull(attendanceList);
     }

@@ -4,13 +4,15 @@ package edu.view.ui.student;
 import edu.curd.dto.ClassDTO;
 import edu.curd.dto.StudentDTO;
 import edu.curd.operation.JDBCDataObject;
+import edu.data.service.ManageAttendenceService;
 import edu.data.service.ManageClassService;
 import edu.data.service.ManageStudentService;
+import edu.data.service.impl.ManageAttendenceServiceImpl;
 import edu.data.service.impl.ManageClassImpl;
 import edu.data.service.impl.ManageStudentServiceImpl;
 import edu.view.ui.MainForm;
 import edu.view.ui.WelcomeFrame;
-import edu.view.ui.classes.ClassAttendence;
+import edu.view.ui.classes.attendence.MarkAttendence;
 import edu.view.ui.util.GenericComboItem;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -45,6 +47,7 @@ public class ManageStudentAttendance extends JDialog {
 
     ManageStudentService manageStudentService = new ManageStudentServiceImpl();
     ManageClassService manageClassService = new ManageClassImpl();
+    ManageAttendenceService manageAttendenceService = new ManageAttendenceServiceImpl();
 
    private static String DATE_PATTERN = "dd-MM-yyyy h:m";
    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ManageStudentAttendance.DATE_PATTERN);
@@ -117,7 +120,7 @@ public class ManageStudentAttendance extends JDialog {
         uName_label2.setForeground(new java.awt.Color(204, 204, 204));
         uName_label2.setText("Date:");
 
-        lblDatetTime.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblDatetTime.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblDatetTime.setForeground(new java.awt.Color(204, 204, 204));
         lblDatetTime.setText("XXXX-XX-XX");
 
@@ -219,6 +222,8 @@ public class ManageStudentAttendance extends JDialog {
 
         if (studentsList == null || studentsList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No Students are enrolled for this subject!");
+            
+             tableModel.setRowCount(0);
             return;
         }
 
@@ -239,7 +244,7 @@ public class ManageStudentAttendance extends JDialog {
             int selectedClassId = Integer.valueOf(selectedClass.split(" - ")[0]);
             return selectedClassId;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No Classes were selected!");
+           // JOptionPane.showMessageDialog(this, "No Classes were selected!");
         }
         return 0;
     }
@@ -264,13 +269,14 @@ public class ManageStudentAttendance extends JDialog {
 
     private void initDataTable() {
         studentTable.setModel(tableModel);
-        tableModel.addColumn("Select");
+        tableModel.addColumn("Student Present");
         tableModel.addColumn("Student ID");
         tableModel.addColumn("Student Name");
         tableModel.addColumn("Enrollment ID");
     }
 
     private void loadClassDetails() {
+        tableModel.setRowCount(0);
         List<JDBCDataObject> classObjLis = manageClassService.viewAllClasses();
         if (classObjLis != null && !classObjLis.isEmpty()) {
 
@@ -279,7 +285,7 @@ public class ManageStudentAttendance extends JDialog {
                 cmbClasses.addItem(new GenericComboItem(classObject.getClassId(), classObject.getTopic()).toString());
             });
         } else {
-            JOptionPane.showMessageDialog(this, "No Classes to display!");
+           // JOptionPane.showMessageDialog(this, "No Classes to display!");
         }
     }
 
@@ -289,7 +295,7 @@ public class ManageStudentAttendance extends JDialog {
         if (markedStuendts.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No Students were marked, please select the students!");
         } else {
-            if (manageClassService.saveAttendence(getSelectedClassId(), markedStuendts)) {
+            if (manageAttendenceService.saveAttendence(getSelectedClassId(), markedStuendts)) {
                 JOptionPane.showMessageDialog(this, "Students : " + markedStuendts.toString() + " \n marked present.");
             } else {
                 JOptionPane.showMessageDialog(this, "Error while saving attendence.");

@@ -1,14 +1,15 @@
-
 package edu.data.service.impl;
 
 import edu.config.PropertyLoader;
 import edu.curd.dto.AttendanceDTO;
 import edu.curd.dto.ClassDTO;
+import edu.curd.dto.ClassExercisesDTO;
 import edu.curd.dto.EnrollmentDTO;
 import edu.curd.dto.StudentDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.curd.operation.classes.ManageClass;
 import edu.curd.operation.classes.ManageClassEnrollment;
+import edu.curd.operation.excercises.ManageClassExercises;
 import edu.curd.operation.student.ManageStudentAttendance;
 import edu.curd.operation.teacher.ManageTeacher;
 import edu.data.service.ManageClassService;
@@ -24,16 +25,13 @@ public class ManageClassImpl implements ManageClassService {
     private static ManageClass manageClass = null;
     private static ManageClassEnrollment manageClassEnrollment = null;
 
-    private static ManageStudentAttendance manageStudentAttendance = null;
-
     static {
         manageClass = new ManageClass(PropertyLoader.getInstance().getProperties());
         manageClassEnrollment = new ManageClassEnrollment(PropertyLoader.getInstance().getProperties());
-        manageStudentAttendance = new ManageStudentAttendance(PropertyLoader.getInstance().getProperties());
     }
 
     @Override
-    public boolean addClass(String classTopic, String classDescription) {
+    public int addClass(String classTopic, String classDescription) {
 
         List<JDBCDataObject> classList = new ArrayList<>();
         classList.add(new ClassDTO(0, classTopic, classDescription, null));
@@ -42,12 +40,12 @@ public class ManageClassImpl implements ManageClassService {
             List<Integer> ids = manageClass.create(classList);
 
             if (ids != null && !ids.isEmpty()) {
-                return true;
+                return ids.get(0);
             }
         } catch (Exception error) {
             Logger.getLogger(ManageTeacher.class.getName()).log(Level.SEVERE, "Error while performing the operation.", error);
         }
-        return false;
+        return 0;
     }
 
     @Override
@@ -92,20 +90,5 @@ public class ManageClassImpl implements ManageClassService {
     }
 
 
-    @Override
-    public boolean saveAttendence(int classId, Map<String, String> markedStuendts) {
-
-
-        List<JDBCDataObject> attendanceList = new ArrayList<>();
-
-        markedStuendts.keySet().forEach((studentId) -> {
-            attendanceList.add(new AttendanceDTO(0, Integer.valueOf(markedStuendts.get(studentId)), Integer.valueOf(studentId), classId, null));
-        });
-
-        List<Integer> ids = manageStudentAttendance.create(attendanceList);
-
-        return ids != null && ids.size() == markedStuendts.size();
-        
-    }
 
 }

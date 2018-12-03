@@ -3,11 +3,13 @@ package edu.view.ui;
 
 import edu.config.PropertyLoader;
 import edu.curd.dto.StudentDTO;
-import edu.view.ui.classes.ClassAttendence;
-import edu.view.ui.classes.ClassManagment;
+import edu.view.ui.classes.attendence.MarkAttendence;
+import edu.view.ui.classes.AddNewClass;
 import edu.view.ui.classes.ClassRegistration;
-import edu.view.ui.excercises.ClassExcersises;
-import edu.view.ui.excercises.ClassGrades;
+import edu.view.ui.classes.attendence.ViewAttendence;
+import edu.view.ui.excercises.AddClassExcersises;
+import edu.view.ui.excercises.AddExcersisesTopic;
+import edu.view.ui.excercises.ViewStudentGrades;
 import edu.view.ui.student.ListStudentDetails;
 import edu.view.ui.student.ManageStudentAttendance;
 import edu.view.ui.student.StudentDetails;
@@ -21,14 +23,16 @@ public class MainForm extends javax.swing.JFrame {
 
     Dimension desktopSize;
     JDialog classRegistrationForm = new ClassRegistration(this);
-    JDialog classManagmentForm = new ClassManagment(this);
+    JDialog classManagmentForm = new AddNewClass(this);
     JDialog ListStudentDetailsForm = new ListStudentDetails(this);
     JDialog changeTeacherDetailsForm = new TeacherDetails(this);
     StudentDetails studentDetailsForm = new StudentDetails(this);
     JDialog classAttendenceForm = new ManageStudentAttendance(this);
-    JDialog classExcersisesForm = new ClassExcersises(this);
-    JDialog classGradesForm = new ClassGrades(this);
-
+    JDialog classExcersisesForm = new AddClassExcersises(this);
+    JDialog classGradesForm = new ViewStudentGrades(this);
+    JDialog viewAttendence = new ViewAttendence(this);
+ JDialog addExcersisesTopic = new AddExcersisesTopic(this);
+ 
     public static String USER_ID="";
     public MainForm() {
         initComponents();
@@ -53,14 +57,17 @@ public class MainForm extends javax.swing.JFrame {
         registerMenu = new javax.swing.JMenuItem();
         modifyStudentMenu = new javax.swing.JMenuItem();
         viewStudentsMenu = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        gradeMenu = new javax.swing.JMenuItem();
         classMenu = new javax.swing.JMenu();
         addClassesMenu = new javax.swing.JMenuItem();
         enrollMenu = new javax.swing.JMenuItem();
-        markAttendenceMenu = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         assingmentMenu = new javax.swing.JMenu();
         addExMenu = new javax.swing.JMenuItem();
-        gradeMenu = new javax.swing.JMenuItem();
+        topicMenu = new javax.swing.JMenuItem();
+        attendance = new javax.swing.JMenu();
+        viewAttendenceMenu = new javax.swing.JMenuItem();
+        markAttendenceMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +124,17 @@ public class MainForm extends javax.swing.JFrame {
         });
         studentMenu.add(viewStudentsMenu);
 
+        jSeparator1.setBorder(new javax.swing.border.MatteBorder(null));
+        studentMenu.add(jSeparator1);
+
+        gradeMenu.setText("Manage Grades");
+        gradeMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradeMenuActionPerformed(evt);
+            }
+        });
+        studentMenu.add(gradeMenu);
+
         menuBar.add(studentMenu);
 
         classMenu.setMnemonic('c');
@@ -140,16 +158,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         classMenu.add(enrollMenu);
 
-        markAttendenceMenu.setMnemonic('a');
-        markAttendenceMenu.setText("Mark Atendance");
-        markAttendenceMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                markAttendenceMenuActionPerformed(evt);
-            }
-        });
-        classMenu.add(markAttendenceMenu);
-        classMenu.add(jSeparator1);
-
         menuBar.add(classMenu);
 
         assingmentMenu.setText("Assessment");
@@ -163,15 +171,36 @@ public class MainForm extends javax.swing.JFrame {
         });
         assingmentMenu.add(addExMenu);
 
-        gradeMenu.setText("Manage Grades");
-        gradeMenu.addActionListener(new java.awt.event.ActionListener() {
+        topicMenu.setText("Add Topic");
+        topicMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeMenuActionPerformed(evt);
+                topicMenuActionPerformed(evt);
             }
         });
-        assingmentMenu.add(gradeMenu);
+        assingmentMenu.add(topicMenu);
 
         menuBar.add(assingmentMenu);
+
+        attendance.setText("Attendance");
+
+        viewAttendenceMenu.setText("View Attendence");
+        viewAttendenceMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAttendenceMenuActionPerformed(evt);
+            }
+        });
+        attendance.add(viewAttendenceMenu);
+
+        markAttendenceMenu.setMnemonic('a');
+        markAttendenceMenu.setText("Mark Atendance");
+        markAttendenceMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                markAttendenceMenuActionPerformed(evt);
+            }
+        });
+        attendance.add(markAttendenceMenu);
+
+        menuBar.add(attendance);
 
         setJMenuBar(menuBar);
 
@@ -237,13 +266,21 @@ public class MainForm extends javax.swing.JFrame {
         displayChildForm(classAttendenceForm);
     }//GEN-LAST:event_markAttendenceMenuActionPerformed
 
+    private void addExMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExMenuActionPerformed
+        displayChildForm(classExcersisesForm);
+    }//GEN-LAST:event_addExMenuActionPerformed
+
     private void gradeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeMenuActionPerformed
         displayChildForm(classGradesForm);
     }//GEN-LAST:event_gradeMenuActionPerformed
 
-    private void addExMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExMenuActionPerformed
-        displayChildForm(classExcersisesForm);
-    }//GEN-LAST:event_addExMenuActionPerformed
+    private void viewAttendenceMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAttendenceMenuActionPerformed
+      displayChildForm(viewAttendence);
+    }//GEN-LAST:event_viewAttendenceMenuActionPerformed
+
+    private void topicMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topicMenuActionPerformed
+         displayChildForm(addExcersisesTopic);
+    }//GEN-LAST:event_topicMenuActionPerformed
 
     
     
@@ -287,6 +324,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem addClassesMenu;
     private javax.swing.JMenuItem addExMenu;
     private javax.swing.JMenu assingmentMenu;
+    private javax.swing.JMenu attendance;
     private javax.swing.JMenuItem changePasswordMenu;
     private javax.swing.JMenu classMenu;
     private javax.swing.JDesktopPane desktopPane;
@@ -300,6 +338,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem modifyStudentMenu;
     private javax.swing.JMenuItem registerMenu;
     private javax.swing.JMenu studentMenu;
+    private javax.swing.JMenuItem topicMenu;
+    private javax.swing.JMenuItem viewAttendenceMenu;
     private javax.swing.JMenuItem viewStudentsMenu;
     // End of variables declaration//GEN-END:variables
 

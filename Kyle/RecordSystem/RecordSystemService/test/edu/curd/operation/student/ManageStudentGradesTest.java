@@ -1,6 +1,6 @@
 package edu.curd.operation.student;
 
-import edu.curd.dto.GadesDTO;
+import edu.curd.dto.GradesDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.curd.operation.JDBCOperation;
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ public class ManageStudentGradesTest {
     @BeforeClass
     public static void setUpClass() {
         prop = new Properties();
-        prop.put("DB_URL", "jdbc:mysql://localhost:3306/classroom_records");
-        prop.put("DB_USER", "root");
-        prop.put("DB_PASSWORD", "root123");
+        prop.put("DB_URL", "jdbc:mysql://localhost/classroom_records?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        prop.put("DB_USER", "rootx");
+        prop.put("DB_PASSWORD", "rootx123");
         manageAttendance = new ManageStudentGrades(prop);
     }
 
@@ -41,8 +41,8 @@ public class ManageStudentGradesTest {
     public void testCreate() {
 
         List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList.add(new GadesDTO(0, 1, 1, "Pass", "50", null));
-        attendanceList.add(new GadesDTO(0, 1, 2, "Fail", "20", null));
+        attendanceList.add(new GradesDTO(0, 1, 1, "8/10", null));
+        attendanceList.add(new GradesDTO(0, 1, 1, "9/10", null));
 
         List<Integer> ids = manageAttendance.create(attendanceList);
         assertEquals(2, ids.size());
@@ -56,7 +56,7 @@ public class ManageStudentGradesTest {
     public void testUpdate() {
 
         List<JDBCDataObject> attendanceList = new ArrayList<>();
-        attendanceList = manageAttendance.read(new GadesDTO(0, 0, 0, "Pass", null, null));
+        attendanceList = manageAttendance.read(new GradesDTO(0, 0, 0, "9/10", null));
 
         assertTrue("",attendanceList.size()>0);
     }

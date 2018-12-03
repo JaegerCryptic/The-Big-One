@@ -21,25 +21,26 @@ import javax.swing.JOptionPane;
  * @author Aeron
  */
 public class StudentDetails extends javax.swing.JDialog {
-
+    
     public ManageStudentService manageStudentService = new ManageStudentServiceImpl();
-
+    
     public StudentDetails(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         initGUI();
     }
-
+    
     public StudentDetails(java.awt.Frame parent) {
         super(parent);
         initComponents();
         initGUI();
     }
-
+    
     private void initGUI() {
         ButtonGroup group = new ButtonGroup();
         group.add(maleOpt);
         group.add(femaleOpt);
+        saveStudentButton.setText("Save");
     }
 
     /**
@@ -277,9 +278,9 @@ public class StudentDetails extends javax.swing.JDialog {
             .addGroup(contentLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(saveStudentButton1)
-                .addGap(161, 161, 161)
+                .addGap(86, 86, 86)
                 .addComponent(saveStudentButton)
-                .addGap(67, 67, 67))
+                .addGap(142, 142, 142))
             .addGroup(contentLayout.createSequentialGroup()
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(contentLayout.createSequentialGroup()
@@ -295,7 +296,7 @@ public class StudentDetails extends javax.swing.JDialog {
                             .addComponent(txtstudentDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentLName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentFName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtstudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -349,7 +350,7 @@ public class StudentDetails extends javax.swing.JDialog {
                     .addComponent(uName_label6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveStudentButton1)
                     .addComponent(saveStudentButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -398,15 +399,17 @@ public class StudentDetails extends javax.swing.JDialog {
     }//GEN-LAST:event_txtstudentLNameActionPerformed
 
     private void saveStudentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveStudentButton1ActionPerformed
+        
+        this.cleanForm();
         this.setVisible(false);
     }//GEN-LAST:event_saveStudentButton1ActionPerformed
-
+    
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     private void saveStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveStudentButtonActionPerformed
-
+        
         StudentDTO studnetDTO = new StudentDTO();
-
+        
         if (txtstudentFName.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Please enter Student First Name!");
             return;
@@ -430,26 +433,28 @@ public class StudentDetails extends javax.swing.JDialog {
             studnetDTO.setPhone(txtstudentPhoe.getText());
             String gender = maleOpt.isSelected() ? "Male" : "Female";
             studnetDTO.setGender(gender);
-
+            
             int newId = 0;
-
-            if (txtstudentId.getText().isEmpty()) {
+            
+            if (saveStudentButton.getText().equalsIgnoreCase("Save")) {
                 newId = manageStudentService.addNewStudent(studnetDTO);
             } else {
                 studnetDTO.setStudentId(Integer.valueOf(txtstudentId.getText()));
-                if(manageStudentService.updateStudent(studnetDTO))
+                if (manageStudentService.updateStudent(studnetDTO)) {
                     newId = Integer.valueOf(txtstudentId.getText());
+                }
             }
-
+            
             if (newId > 0) {
                 txtstudentId.setText(String.valueOf(newId));
-                JOptionPane.showMessageDialog(this, "Details are saved!", "Student Details", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Student details are saved! \n  STUDENT ID = " + String.valueOf(newId), "Student Details", JOptionPane.INFORMATION_MESSAGE);
+                this.cleanForm();
             } else {
                 JOptionPane.showMessageDialog(this, "Error while saving details!", "Student Details", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_saveStudentButtonActionPerformed
-
+    
     public void loadStudentDetails(StudentDTO studnetDTO) {
         txtstudentFName.setText(studnetDTO.getFirstName());
         txtstudentLName.setText(studnetDTO.getLastName());
@@ -460,7 +465,8 @@ public class StudentDetails extends javax.swing.JDialog {
         boolean isMale = studnetDTO.getGender().startsWith("M");
         maleOpt.setSelected(isMale);
         txtstudentId.setText(String.valueOf(studnetDTO.getStudentId()));
-
+        
+        saveStudentButton.setText("Update");
     }
     private void txtstudentPhoeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentPhoeKeyPressed
         // TODO add your handling code here:
@@ -518,4 +524,16 @@ public class StudentDetails extends javax.swing.JDialog {
     private javax.swing.JLabel uName_label6;
     private javax.swing.JLabel uName_label8;
     // End of variables declaration//GEN-END:variables
+
+    private void cleanForm() {
+        txtstudentFName.setText("");
+        txtstudentLName.setText("");
+        txtstudentDOB.cleanup();
+        txtstudentAddress.setText("");
+        txtstudentPhoe.setText("");
+        maleOpt.setSelected(true);
+        femaleOpt.setSelected(false);
+        saveStudentButton.setText("Save");
+        txtstudentId.setText("");
+    }
 }

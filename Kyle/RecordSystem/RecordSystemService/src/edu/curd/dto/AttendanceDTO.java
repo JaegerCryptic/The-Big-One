@@ -10,16 +10,26 @@ public class AttendanceDTO implements JDBCDataObject {
     private int studentId;
     private int classId;
     private String timeStamp;
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public AttendanceDTO() {
     }
 
-    public AttendanceDTO(int attendanceId,
+    public AttendanceDTO(int attendanceId,String fullName,
             int enrollmentId,
             int studentId,
             int classId,
             String timeStamp) {
         this.attendanceId = attendanceId;
+        this.fullName=fullName;
         this.enrollmentId = enrollmentId;
         this.studentId = studentId;
         this.classId = classId;

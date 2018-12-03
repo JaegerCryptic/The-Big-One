@@ -12,7 +12,7 @@ public class DatabaseConnection {
 
         Connection databaseConnection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             
                         databaseConnection = DriverManager.getConnection(
                                 contextProperties.getProperty("DB_URL"), contextProperties.getProperty("DB_USER"), contextProperties.getProperty("DB_PASSWORD"));

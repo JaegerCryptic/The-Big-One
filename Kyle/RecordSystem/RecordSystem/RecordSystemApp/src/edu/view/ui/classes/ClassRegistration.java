@@ -48,11 +48,7 @@ public class ClassRegistration extends javax.swing.JDialog {
         initDataSettings();
     }
 
-    public ClassRegistration() {
 
-        initComponents();
-        initDataSettings();
-    }
 
     private void initDataSettings() {
         this.addComponentListener(new ComponentAdapter() {
@@ -70,6 +66,7 @@ public class ClassRegistration extends javax.swing.JDialog {
     }
 
     private void loadClassDetails() {
+        cmbClasses.removeAllItems();
         List<JDBCDataObject> classObjLis = manageClassService.viewAllClasses();
         if (classObjLis != null && !classObjLis.isEmpty()) {
 
@@ -78,7 +75,7 @@ public class ClassRegistration extends javax.swing.JDialog {
                 cmbClasses.addItem(new GenericComboItem(classObject.getClassId(), classObject.getTopic()).toString());
             });
         } else {
-            JOptionPane.showMessageDialog(this, "No Classes to display!");
+           // JOptionPane.showMessageDialog(this, "No Classes to display!");
         }
     }
 
@@ -279,7 +276,7 @@ public class ClassRegistration extends javax.swing.JDialog {
             int selectedClassId = Integer.valueOf(selectedClass.split(" - ")[0]);
             return selectedClassId;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No Classes were selected!");
+           // JOptionPane.showMessageDialog(this, "No Classes were selected!");
         }
         return 0;
     }
@@ -302,13 +299,7 @@ public class ClassRegistration extends javax.swing.JDialog {
             studentIdTxt.setText(studentIdText.toString());
     }//GEN-LAST:event_cmbClassesActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        ClassRegistration newClassRegistration = new ClassRegistration();
-        newClassRegistration.setVisible(true);
-    }
+
 
     public Set<String> getStudentIdList() {
         return new HashSet<String>(Arrays.asList(studentIdTxt.getText().split(" ; ")));

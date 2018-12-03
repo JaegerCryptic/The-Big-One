@@ -1,4 +1,3 @@
-
 package edu.view.ui.teacher;
 
 import edu.config.PropertyLoader;
@@ -8,9 +7,11 @@ import edu.data.service.impl.ManageTeacherServiceImpl;
 import edu.view.ui.MainForm;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
-
 
 public class TeacheLogin extends javax.swing.JDialog {
 
@@ -26,6 +27,8 @@ public class TeacheLogin extends javax.swing.JDialog {
         int x = (screenSize.width - this.getWidth()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
+
+        txtPassword.addActionListener(loginAction);
     }
 
     /**
@@ -53,7 +56,7 @@ public class TeacheLogin extends javax.swing.JDialog {
         header.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setText("Teacher Login");
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -222,32 +225,40 @@ public class TeacheLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        loginUser();
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    Action loginAction = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loginUser();
+        }
+    };
+
+    private void loginUser() {
         int userId = teacherService.validatUser(txtUserLogin.getText(), String.valueOf(txtPassword.getPassword()));
 
         if (userId > 0) {
-      
+
             MainForm mainForm = new MainForm();
             MainForm.USER_ID = String.valueOf(userId);
-            
-            
-       Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - mainForm.getWidth()) / 2;
-        int y = (screenSize.height - mainForm.getHeight()) / 2;
 
-        mainForm.setExtendedState(mainForm.MAXIMIZED_BOTH);
-        mainForm.setLocation(x, y);
-        mainForm.setVisible(true);
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension screenSize = toolkit.getScreenSize();
+            int x = (screenSize.width - mainForm.getWidth()) / 2;
+            int y = (screenSize.height - mainForm.getHeight()) / 2;
 
-        this.setVisible(false);
-        this.dispose();
-            
-            
+            mainForm.setExtendedState(mainForm.MAXIMIZED_BOTH);
+            mainForm.setLocation(x, y);
+            mainForm.setVisible(true);
+
+            this.setVisible(false);
+            this.dispose();
+
         } else {
             JOptionPane.showMessageDialog(this, "Invalid user credentials! Plesae try again!.");
         }
-
-    }//GEN-LAST:event_loginButtonActionPerformed
+    }
 
     /**
      * @param args the command line arguments

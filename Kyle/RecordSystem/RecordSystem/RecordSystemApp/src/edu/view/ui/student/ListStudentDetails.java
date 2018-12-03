@@ -94,14 +94,10 @@ public class ListStudentDetails extends JDialog {
             @Override
             public void windowOpened(WindowEvent e) {
                 initDataTable();
-            }
-        });
-
-        this.addComponentListener(new ComponentAdapter() {
-            public void componentShown(ComponentEvent evt) {
                 loadTableData(manageStudentService.viewAllStudents());
             }
         });
+
 
     }
 

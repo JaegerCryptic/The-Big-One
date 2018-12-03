@@ -32,10 +32,10 @@ public class WelcomeFrame extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        titleText.setFont(new java.awt.Font("Arial", 1, 48)); 
+        titleText.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         titleText.setText(applicationTitle);
 
-        lblVersion.setFont(new java.awt.Font("Arial", 0, 36)); 
+        lblVersion.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         lblVersion.setText(applicationVersion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

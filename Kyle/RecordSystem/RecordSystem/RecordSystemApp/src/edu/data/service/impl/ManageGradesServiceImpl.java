@@ -1,10 +1,12 @@
-
 package edu.data.service.impl;
 
 import edu.config.PropertyLoader;
 import edu.curd.dto.ClassExercisesDTO;
+import edu.curd.dto.GradesDTO;
+import edu.curd.dto.StudentGradesDTO;
 import edu.curd.operation.JDBCDataObject;
 import edu.curd.operation.excercises.ManageClassExercises;
+import edu.curd.operation.student.ManageStudentGrades;
 import edu.curd.operation.teacher.ManageTeacher;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,31 +16,33 @@ import edu.data.service.ManageGradesService;
 
 public class ManageGradesServiceImpl implements ManageGradesService {
 
-    private static ManageClassExercises manageClassExercises = null;
+    private static ManageStudentGrades manageStudentGrades = null;
 
     static {
-        manageClassExercises = new ManageClassExercises(PropertyLoader.getInstance().getProperties());
+        manageStudentGrades = new ManageStudentGrades(PropertyLoader.getInstance().getProperties());
     }
 
     @Override
-    public boolean saveExcersise(int calssId, String excerciseName) {
+    public List<StudentGradesDTO> viewStudentGrades(int selectedClassId, int selectedExcercisesId, int selectedTopicId) {
 
-        if(calssId <=0 || excerciseName==null){
-            return false;
-        }
-        List<JDBCDataObject> excercise = new ArrayList<>();
-        excercise.add(new ClassExercisesDTO(0, calssId, excerciseName, null));
+        return manageStudentGrades.readGrades(selectedClassId, selectedExcercisesId, selectedTopicId);
 
-        try {
-            List<Integer> ids = manageClassExercises.create(excercise);
+    }
 
-            if (ids != null && !ids.isEmpty()) {
-                return true;
-            }
-        } catch (Exception error) {
-            Logger.getLogger(ManageTeacher.class.getName()).log(Level.SEVERE, "Error while performing the operation.", error);
-        }
-        return false;
+    @Override
+    public boolean updateMarks(int gradesId, String newScore) {
+        return manageStudentGrades.updateMarks(gradesId, newScore);
+    }
+
+    @Override
+    public boolean insertMarks(int studentEnrollId, int selectedTopicId, String newScore) {
+
+        List<JDBCDataObject> newMarks = new ArrayList<>();
+        newMarks.add(new GradesDTO(0, studentEnrollId, selectedTopicId, newScore, null));
+
+        List<Integer> ids = manageStudentGrades.create(newMarks);
+
+        return !ids.isEmpty();
     }
 
 }
