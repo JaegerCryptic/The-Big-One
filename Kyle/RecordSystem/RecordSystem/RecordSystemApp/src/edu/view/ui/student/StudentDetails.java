@@ -75,6 +75,7 @@ public class StudentDetails extends javax.swing.JDialog {
         txtstudentLName = new javax.swing.JTextField();
         uName_label8 = new javax.swing.JLabel();
         txtstudentFName = new javax.swing.JTextField();
+        txtStudentDOB = new com.toedter.calendar.JDateChooser();
 
         txtUserLogin2.setBackground(new java.awt.Color(51, 51, 51));
         txtUserLogin2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -279,19 +280,6 @@ public class StudentDetails extends javax.swing.JDialog {
             .addGroup(contentLayout.createSequentialGroup()
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(contentLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uName_label)
-                            .addComponent(uName_label3)
-                            .addComponent(uName_label8))
-                        .addGap(48, 48, 48)
-                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentPhoe, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentLName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentFName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(contentLayout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(contentLayout.createSequentialGroup()
@@ -302,10 +290,27 @@ public class StudentDetails extends javax.swing.JDialog {
                         .addComponent(uName_label5))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(uName_label4))
+                        .addComponent(uName_label1))
                     .addGroup(contentLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(uName_label1)))
+                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(contentLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(uName_label)
+                                    .addComponent(uName_label3)
+                                    .addComponent(uName_label8)))
+                            .addGroup(contentLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(uName_label4)))
+                        .addGap(48, 48, 48)
+                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtstudentLName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtstudentFName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtstudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtStudentDOB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtstudentPhoe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contentLayout.setVerticalGroup(
@@ -332,7 +337,9 @@ public class StudentDetails extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
-                .addComponent(uName_label4)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(uName_label4)
+                    .addComponent(txtStudentDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtstudentPhoe, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,7 +415,7 @@ public class StudentDetails extends javax.swing.JDialog {
         } else if (txtstudentLName.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Please enter Student Last Name!");
             return;
-        } else if (txtstudentDOB.isValid()) {
+        } else if (txtStudentDOB.isValid()) {
             JOptionPane.showMessageDialog(this, "Please enter Student DOB !");
             return;
         } else if (txtstudentAddress.getText().trim().length() == 0) {
@@ -420,7 +427,7 @@ public class StudentDetails extends javax.swing.JDialog {
         } else {
             studnetDTO.setFirstName(txtstudentFName.getText());
             studnetDTO.setLastName(txtstudentLName.getText());
-            studnetDTO.setDob(sdf.format(txtstudentDOB.getDate()));
+            studnetDTO.setDob(sdf.format(txtStudentDOB.getDate()));
             studnetDTO.setAddress(txtstudentAddress.getText());
             studnetDTO.setPhone(txtstudentPhoe.getText());
             String gender = maleOpt.isSelected() ? "Male" : "Female";
@@ -450,7 +457,7 @@ public class StudentDetails extends javax.swing.JDialog {
     public void loadStudentDetails(StudentDTO studnetDTO) {
         txtstudentFName.setText(studnetDTO.getFirstName());
         txtstudentLName.setText(studnetDTO.getLastName());
-        txtstudentDOB.setDate(new Date());
+        txtStudentDOB.setDate(new Date());
         //;.setText(studnetDTO.getDob());
         txtstudentAddress.setText(studnetDTO.getAddress());
         txtstudentPhoe.setText(studnetDTO.getPhone());
@@ -500,6 +507,7 @@ public class StudentDetails extends javax.swing.JDialog {
     private javax.swing.JRadioButton maleOpt;
     private javax.swing.JButton saveStudentButton;
     private javax.swing.JButton saveStudentButton1;
+    private com.toedter.calendar.JDateChooser txtStudentDOB;
     private javax.swing.JTextField txtUserLogin2;
     private javax.swing.JTextArea txtstudentAddress;
     private javax.swing.JTextField txtstudentFName;
@@ -519,7 +527,7 @@ public class StudentDetails extends javax.swing.JDialog {
     private void cleanForm() {
         txtstudentFName.setText("");
         txtstudentLName.setText("");
-        txtstudentDOB.cleanup();
+        txtStudentDOB.cleanup();
         txtstudentAddress.setText("");
         txtstudentPhoe.setText("");
         maleOpt.setSelected(true);
