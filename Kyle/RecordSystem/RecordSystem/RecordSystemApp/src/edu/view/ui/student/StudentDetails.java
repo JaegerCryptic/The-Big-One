@@ -65,7 +65,6 @@ public class StudentDetails extends javax.swing.JDialog {
         maleOpt = new javax.swing.JRadioButton();
         femaleOpt = new javax.swing.JRadioButton();
         uName_label4 = new javax.swing.JLabel();
-        txtstudentDOB = new com.toedter.calendar.JDateChooser();
         uName_label5 = new javax.swing.JLabel();
         txtstudentPhoe = new javax.swing.JTextField();
         uName_label6 = new javax.swing.JLabel();
@@ -191,10 +190,6 @@ public class StudentDetails extends javax.swing.JDialog {
         uName_label4.setForeground(new java.awt.Color(204, 204, 204));
         uName_label4.setText("DOB");
 
-        txtstudentDOB.setBackground(new java.awt.Color(51, 51, 51));
-        txtstudentDOB.setForeground(new java.awt.Color(255, 255, 255));
-        txtstudentDOB.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
         uName_label5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         uName_label5.setForeground(new java.awt.Color(204, 204, 204));
         uName_label5.setText("Phone");
@@ -293,7 +288,6 @@ public class StudentDetails extends javax.swing.JDialog {
                         .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentPhoe, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtstudentDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentLName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentFName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtstudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -338,9 +332,7 @@ public class StudentDetails extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
-                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(uName_label4)
-                    .addComponent(txtstudentDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(uName_label4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtstudentPhoe, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -510,7 +502,6 @@ public class StudentDetails extends javax.swing.JDialog {
     private javax.swing.JButton saveStudentButton1;
     private javax.swing.JTextField txtUserLogin2;
     private javax.swing.JTextArea txtstudentAddress;
-    private com.toedter.calendar.JDateChooser txtstudentDOB;
     private javax.swing.JTextField txtstudentFName;
     private javax.swing.JTextField txtstudentId;
     private javax.swing.JTextField txtstudentLName;

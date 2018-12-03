@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  *
- * @author aeronx
+ * @author Kyle
  */
 public interface ClassExcercisesService {
 

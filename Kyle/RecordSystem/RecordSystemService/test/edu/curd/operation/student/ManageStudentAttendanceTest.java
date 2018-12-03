@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class ManageStudentAttendanceTest {
     

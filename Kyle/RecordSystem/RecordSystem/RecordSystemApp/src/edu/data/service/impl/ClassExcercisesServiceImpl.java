@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author aeronx
+ * @author Kyle
  */
 public class ClassExcercisesServiceImpl implements ClassExcercisesService {
 

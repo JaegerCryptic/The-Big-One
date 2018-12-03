@@ -13,7 +13,7 @@ import edu.data.service.ManageAttendenceService;
 
 /**
  *
- * @author aeronx
+ * @author Kyle
  */
 public class ManageAttendenceServiceImpl implements ManageAttendenceService {
 

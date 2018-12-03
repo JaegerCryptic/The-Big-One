@@ -126,7 +126,6 @@ public class ViewAttendence extends javax.swing.JDialog {
         studentTable = new javax.swing.JTable();
         uName_label2 = new javax.swing.JLabel();
         cancle = new javax.swing.JButton();
-        txtDate = new com.toedter.calendar.JDateChooser();
         search = new javax.swing.JButton();
 
         uName_label1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -208,10 +207,6 @@ public class ViewAttendence extends javax.swing.JDialog {
             }
         });
 
-        txtDate.setBackground(new java.awt.Color(51, 51, 51));
-        txtDate.setForeground(new java.awt.Color(255, 255, 255));
-        txtDate.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
         search.setText("Search");
         search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,12 +229,9 @@ public class ViewAttendence extends javax.swing.JDialog {
                                     .addComponent(uName_label)
                                     .addComponent(uName_label2))
                                 .addGap(122, 122, 122)
-                                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(contentLayout.createSequentialGroup()
-                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(search))))))
+                                    .addComponent(search, javax.swing.GroupLayout.Alignment.TRAILING)))))
                     .addGroup(contentLayout.createSequentialGroup()
                         .addGap(221, 221, 221)
                         .addComponent(cancle)))
@@ -255,7 +247,6 @@ public class ViewAttendence extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(uName_label2)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(search))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,7 +325,6 @@ public class ViewAttendence extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton search;
     private javax.swing.JTable studentTable;
-    private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JLabel uName_label;
     private javax.swing.JLabel uName_label1;
     private javax.swing.JLabel uName_label2;
