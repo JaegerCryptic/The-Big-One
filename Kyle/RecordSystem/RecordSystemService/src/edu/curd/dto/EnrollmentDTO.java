@@ -5,7 +5,7 @@ import edu.curd.operation.JDBCDataObject;
 
 /**
  *
- * @author Aeron
+ * @author Kyle
  */
 public class EnrollmentDTO implements JDBCDataObject {
 
